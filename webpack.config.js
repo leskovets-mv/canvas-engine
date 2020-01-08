@@ -1,12 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugins = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/app.ts',
   output: {
     filename: 'bundle.[chunkhash].js',
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'public')
   },
   devtool: false,
   devServer: {
@@ -17,11 +18,14 @@ module.exports = {
     new HtmlWebpackPlugins({
       template: './src/index.html',
     }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, 'src', 'assets'),
+        to: path.resolve(__dirname, 'public', 'assets'),
+      },
+    ]),
     new CleanWebpackPlugin()
   ],
-  resolve: {
-    extensions: [".ts", ".tsx", ".js"]
-  },
   module: {
     rules: [
       {
@@ -32,9 +36,12 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i,
         loader: 'image-loader',
         options: {
-          name: path.resolve(__dirname, 'public', 'assets', '[name].[ext]'),
+          name: path.resolve(__dirname, 'public', 'assets', '[name].[ext]')
         }
       }
     ]
-  }
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
 }

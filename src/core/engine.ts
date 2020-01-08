@@ -1,5 +1,4 @@
 import { GameObjectInterface } from "./interfaces/gameObject.interface";
-import { resolve } from 'path';
 
 export class Engine {
     public width: number;
@@ -41,10 +40,10 @@ export class Engine {
         if (this.imageList[image]) return;
         const img = new Image();
 
-        img.onload = (event:any) => {
+        img.onload = (event: any) => {
             this.imageList[image] = event.path[0];
         }
 
-        img.src = resolve(__dirname, 'assets', pathFile);
+        img.src = './assets/' + pathFile;
     }
 }
