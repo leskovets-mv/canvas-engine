@@ -5,5 +5,5 @@ export interface GameObjectInterface {
     position: PositionInterface;
     size: SizeInterface;
     color: string;
-    update: () => void;
+    update?: () => void;
 }

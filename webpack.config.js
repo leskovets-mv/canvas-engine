@@ -3,27 +3,38 @@ const HtmlWebpackPlugins = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/app.ts',
-    output: {
-        filename: 'bundle.[chunkhash].js',
-        path: path.resolve(__dirname, 'public')
-    },
-    devServer: {
-        port: 3000
-    },
-    plugins: [
-        new HtmlWebpackPlugins({
-            template: './src/index.html',
-            title: 'Game'
-        }),
-        new CleanWebpackPlugin()
-    ],
-    resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+  entry: './src/app.ts',
+  output: {
+    filename: 'bundle.[chunkhash].js',
+    path: path.resolve(__dirname, 'public')
+  },
+  devtool: false,
+  devServer: {
+    publicPath: "/",
+    port: 3000
+  },
+  plugins: [
+    new HtmlWebpackPlugins({
+      template: './src/index.html',
+    }),
+    new CleanWebpackPlugin()
+  ],
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader"
       },
-      module: {
-        rules: [
-          { test: /\.tsx?$/, loader: "ts-loader" }
-        ]
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: path.resolve(__dirname, 'public', 'assets', '[name].[ext]'),
+        }
       }
+    ]
+  }
 }

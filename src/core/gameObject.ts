@@ -7,10 +7,13 @@ export class GameObject {
     public position: PositionInterface
     public color: string;
 
-    constructor(params:any) {
+    constructor(params: any) {
         this.position = params.position;
         this.size = params.size;
         this.color = params.color;
+        if (params.update) {
+            this.update = params.update;
+        }
     }
 
     public direction(velosity: PositionInterface): void {
@@ -18,8 +21,11 @@ export class GameObject {
         this.position.y += velosity.y ? velosity.y : 0;
     }
 
-    public isCollision(gameObject: GameObjectInterface): boolean {
-        return false;
+    public isCollision(object: GameObjectInterface): boolean {
+        return this.position.x < object.position.x + object.size.width &&
+            this.position.x + this.size.width > object.position.x &&
+            this.position.y < object.position.y + object.size.height &&
+            this.position.y + this.size.height > object.position.y
     }
 
     public update(): void {
