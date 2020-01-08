@@ -5,5 +5,7 @@ export interface GameObjectInterface {
     position: PositionInterface;
     size: SizeInterface;
     color: string;
+    name: string;
+    texture: string;
     update?: () => void;
 }

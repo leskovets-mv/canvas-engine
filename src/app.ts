@@ -4,8 +4,11 @@ import { GameObject } from "./core/gameObject";
 import { GameControl } from "./gameControl";
 import { Tube } from "./tube";
 
-const WIDTH = 600;
-const HEIGHT = 300;
+const WIDTH: number = 600;
+const HEIGHT: number = 300;
+
+let gameOver: boolean = false;
+let score: number = 0;
 
 const game = new Engine({
     width: WIDTH,
@@ -28,68 +31,105 @@ const generateTubes = (): GameObject[] => {
                 width: 30
             },
             color: 'black',
+            name: i % 2 ? 'pipe-r' : 'pipe',
+            texture: i % 2 ? 'pipe-r.png' : 'pipe.png'
         })
         tubes.push(tube)
     }
 
+    game.addedgameObjects(tubes)
+
     return tubes;
 }
 
-const tubes: GameObject[] = generateTubes()
+const generateGround = (lastGroundPositinX = 0): GameObject => {
+    const ground = new GameObject({
+        position: { x: lastGroundPositinX, y: 260 },
+        size: { height: 112, width: 336 },
+        name: 'ground',
+        texture: 'ground.png',
+        color: 'green'
+    })
 
+    game.addedgameObject(ground)
+
+    return ground;
+}
+
+const tubes: GameObject[] = [];
+const grounds: GameObject[] = [];
 
 game.update = () => {
     const _game = game;
     _game.context.clearRect(0, 0, _game.width, _game.height);
     _game.gameObjects.forEach(gameObject => {
+        _game.uploadImage(gameObject.name, gameObject.texture)
         _game.context.fillStyle = gameObject.color;
-        _game.context.fillRect(gameObject.position.x, gameObject.position.y, gameObject.size.width, gameObject.size.height);
+        if (gameObject.texture === '') {
+            _game.context.fillRect(gameObject.position.x, gameObject.position.y, gameObject.size.width, gameObject.size.height);
+        } else if (gameObject.texture) {
+            if (_game.imageList[gameObject.name]) {
+                _game.context.drawImage(
+                    _game.imageList[gameObject.name],
+                    gameObject.position.x,
+                    gameObject.position.y,
+                    gameObject.size.width,
+                    gameObject.size.height
+                )
+            }
+        }
         _game.context.fillStyle = 'black';
     })
-    player.update();
-
-    if (player.isCollision(grow)) {
-        console.log('Врезался')
-    }
+    _game.context.strokeText(`Очки: ${score}` , 40, 40)
+    grounds.forEach((ground, index) => {
+        if (player.isCollision(ground)) {
+            gameOver = true
+        }
+        if (ground.position.x + ground.size.width > 0) {
+            ground.position.x--;
+        } else {
+            grounds.splice(index, 1)
+        }
+    })
 
     tubes.forEach((tube, index) => {
         if (player.isCollision(tube)) {
-            console.log('Врезался')
+            gameOver = true
         }
 
         if (tube.position.x + tube.size.width < 0) {
             game.destroyGameObject(tube)
             tubes.splice(index, 1)
         }
-
-        if (!tubes.length) {
-            tubes.push(...generateTubes())
-            game.addedgameObjects(tubes)
-        }
-
         tube.update();
     })
 
-    requestAnimationFrame(_game.update);
-}
+    if (!tubes.length) {
+        tubes.push(...generateTubes())
+    }
 
-game.uploadImage('bird', 'bird.png')
-game.uploadImage('ground', 'ground.png')
-game.uploadImage('pipe', 'pipe.png')
+    if (!grounds.length) {
+        grounds.push(generateGround());
+    } else if (grounds.length < 3) {
+        grounds.push(generateGround(grounds[grounds.length - 1].position.x + grounds[grounds.length - 1].size.width - 1));
+    }
+
+    player.update();
+    if (!gameOver) {
+        requestAnimationFrame(_game.update);
+    }
+    score++;
+}
 
 const player = new Bird({
     position: { x: 30, y: HEIGHT / 2 },
-    size: { height: 32, width: 32 },
+    size: { height: 23, width: 32 },
     color: 'red',
+    name: 'bird',
+    texture: 'bird.png',
     control: GameControl()
 })
 
-const grow = new GameObject({
-    position: { x: 0, y: 280 },
-    size: { height: 40, width: 336 },
-    color: 'green'
-})
-
-game.addedgameObjects([player, ...tubes, grow]);
+game.addedgameObject(player);
 game.init();
 game.update();

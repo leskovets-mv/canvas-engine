@@ -6,11 +6,11 @@ module.exports = {
   entry: './src/app.ts',
   output: {
     filename: 'bundle.[chunkhash].js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
   },
   devtool: false,
   devServer: {
-    publicPath: "/",
+    contentBase: path.resolve(__dirname, 'src'),
     port: 3000
   },
   plugins: [
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        loader: 'file-loader',
+        loader: 'image-loader',
         options: {
           name: path.resolve(__dirname, 'public', 'assets', '[name].[ext]'),
         }

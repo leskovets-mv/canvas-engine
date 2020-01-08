@@ -6,11 +6,15 @@ export class GameObject {
     public size: SizeInterface
     public position: PositionInterface
     public color: string;
+    public texture: string;
+    public name: string
 
     constructor(params: any) {
         this.position = params.position;
         this.size = params.size;
         this.color = params.color;
+        this.name = params.name;
+        this.texture = params.texture;
         if (params.update) {
             this.update = params.update;
         }
