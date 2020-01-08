@@ -1,17 +1,22 @@
 import { GameObjectInterface } from "./interfaces/gameObject.interface";
 
 export class Engine {
-    public width: number;
-    public height: number;
     public gameObjects: GameObjectInterface[] = [];
     private canvas: any = <HTMLCanvasElement>document.createElement('canvas');
     public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
     public update: () => void;
     public imageList: any = {};
+    private background: string;
+    private width: number;
+    private height: number;
 
-    constructor(params: { width: number, height: number }) {
+    constructor(params: { width: number, height: number, background?: string }) {
         this.width = params.width;
         this.height = params.height;
+        if (params.background) {
+            this.background = params.background
+            this.uploadImage('background', params.background)
+        }
     }
 
     public init(): void {

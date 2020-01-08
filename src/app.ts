@@ -12,7 +12,8 @@ let score: number = 0;
 
 const game = new Engine({
     width: WIDTH,
-    height: HEIGHT
+    height: HEIGHT,
+    background: 'background.png'
 });
 
 const generateTubes = (): GameObject[] => {
@@ -61,7 +62,10 @@ const grounds: GameObject[] = [];
 
 game.update = () => {
     const _game = game;
-    _game.context.clearRect(0, 0, _game.width, _game.height);
+    _game.context.clearRect(0, 0, WIDTH, HEIGHT);
+    if (_game.imageList['background']) {
+        _game.context.drawImage(_game.imageList['background'], 0, 0, WIDTH, HEIGHT)
+    }
     _game.gameObjects.forEach(gameObject => {
         _game.uploadImage(gameObject.name, gameObject.texture)
         _game.context.fillStyle = gameObject.color;
@@ -80,7 +84,7 @@ game.update = () => {
         }
         _game.context.fillStyle = 'black';
     })
-    _game.context.strokeText(`Очки: ${score}` , 40, 40)
+    _game.context.strokeText(`Очки: ${score}`, 40, 40)
     grounds.forEach((ground, index) => {
         if (player.isCollision(ground)) {
             gameOver = true
