@@ -1,9 +1,7 @@
-export interface GameControlInterface {
-    jump: boolean;
-}
+import {BirdControlInterface} from "./birdControlInterface";
 
-export function GameControl(): GameControlInterface {
-    const control = { jump: false };
+export function BirdControl(): BirdControlInterface {
+    const control = {jump: false};
 
     document.addEventListener('keydown', event => {
         if (event.keyCode === 32) {
@@ -15,7 +13,7 @@ export function GameControl(): GameControlInterface {
                 control.jump = false;
             }
         })
-    })
+    });
 
     return control;
 }
