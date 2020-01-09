@@ -1,6 +1,6 @@
-import {PositionInterface} from "../../interfaces/position.interface";
-import {SceneObjectInterface} from "./scene-object.interface";
-import {SizeInterface} from "../../interfaces/size.interface";
+import { PositionInterface } from "../../interfaces/position.interface";
+import { SceneObjectInterface } from "./scene-object.interface";
+import { SizeInterface } from "../../interfaces/size.interface";
 
 export class SceneObject {
     public size: SizeInterface;
@@ -9,7 +9,7 @@ export class SceneObject {
     public texture: string;
     public name: string;
 
-    constructor(params: any) {
+    constructor(params: { [key: string]: any }) {
         this.position = params.position;
         this.size = params.size;
         this.color = params.color;

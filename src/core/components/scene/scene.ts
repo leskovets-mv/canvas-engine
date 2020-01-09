@@ -1,14 +1,14 @@
-import {SceneInterface} from "./scene.interface";
-import {SceneObjectInterface} from "../scene-object/scene-object.interface";
+import { SceneInterface } from "./scene.interface";
+import { SceneObjectInterface } from "../scene-object/scene-object.interface";
 
 export class Scene implements SceneInterface {
     public sceneObjects: SceneObjectInterface[];
-    public imageList: { [p: string]: HTMLElement } = {};
+    public imageList: { [p: string]: any } = {};
     public background: string;
     public context: CanvasRenderingContext2D;
     public setActiveScene: (sceneName: string) => void;
 
-    constructor(params: any) {
+    constructor(params: { [key: string]: any }) {
         if (params.background) {
             this.uploadImage('background', params.background);
             this.background = params.background;
@@ -18,14 +18,13 @@ export class Scene implements SceneInterface {
         }
         this.setActiveScene = params.setActiveScene;
         this.context = params.context;
-        this.init();
     }
 
     public uploadImage(image: string, pathFile: string): void {
         if (this.imageList[image]) return;
         const img = new Image();
 
-        img.addEventListener('load', (event: any) => {
+        img.addEventListener('load', (event: Event & { path: HTMLImageElement[] }) => {
             this.imageList[image] = event.path[0];
         });
 
@@ -47,10 +46,10 @@ export class Scene implements SceneInterface {
         }
     }
 
-    init(): void {
+    public restart(): void {
     }
 
-    update(): void {
+    public update(): void {
     }
 }
 

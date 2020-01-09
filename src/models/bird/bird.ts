@@ -1,13 +1,13 @@
-import {SceneObjectInterface} from "../../core/components/scene-object/scene-object.interface";
-import {SceneObject} from "../../core/components/scene-object/scene-object";
-import {BirdControlInterface} from "./birdControlInterface";
+import { SceneObjectInterface } from "../../core/components/scene-object/scene-object.interface";
+import { SceneObject } from "../../core/components/scene-object/scene-object";
+import { BirdControlInterface } from "./birdControlInterface";
 
 export class Bird extends SceneObject implements SceneObjectInterface {
     public texture: string;
     public control: BirdControlInterface;
     private coldDown: number = 0;
 
-    constructor({control, ...params}: any) {
+    constructor({ control, ...params }: { [key: string]: any }) {
         super(params);
         this.control = control;
         this.gravity();
@@ -15,11 +15,14 @@ export class Bird extends SceneObject implements SceneObjectInterface {
 
     private jump(): void {
         this.coldDown = 2;
-        this.direction({y: -30});
+        this.direction({ y: -30 });
+        if (this.position.y < 0) {
+            this.direction({ y: -this.position.y })
+        }
     }
 
     private gravity(): void {
-        this.direction({y: 1});
+        this.direction({ y: 1 });
     }
 
     public update() {

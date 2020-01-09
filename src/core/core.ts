@@ -1,7 +1,7 @@
-import {Scene} from "./components/scene/scene";
+import { Scene } from "./components/scene/scene";
 
 export class Core {
-    private canvas: any = <HTMLCanvasElement>document.createElement('canvas');
+    private canvas: HTMLCanvasElement = document.createElement('canvas');
     public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
     public scenes: { [key: string]: Scene } = {};
     private activeScene: Scene;
@@ -21,7 +21,7 @@ export class Core {
     public setActiveScene(scene: string): void {
         if (!this.scenes[scene]) return;
         this.activeScene = this.scenes[scene];
-        this.activeScene.init();
+        this.activeScene.restart();
     }
 
     public appendScene(scene: { name: string, scene: Scene }): void {

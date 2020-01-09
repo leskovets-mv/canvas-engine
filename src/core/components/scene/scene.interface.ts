@@ -9,5 +9,5 @@ export interface SceneInterface {
 
     update(): void,
 
-    init(): void,
+    restart(): void,
 }

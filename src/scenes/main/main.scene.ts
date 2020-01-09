@@ -1,10 +1,10 @@
-import {SceneObjectInterface} from "../../core/components/scene-object/scene-object.interface";
-import {SceneObject} from "../../core/components/scene-object/scene-object";
-import {BirdControl} from "../../models/bird/birdControl";
-import {Scene} from "../../core/components/scene/scene";
+import { SceneObjectInterface } from "../../core/components/scene-object/scene-object.interface";
+import { SceneObject } from "../../core/components/scene-object/scene-object";
+import { BirdControl } from "../../models/bird/birdControl";
+import { Scene } from "../../core/components/scene/scene";
 import projectConfig from "../../project.config";
-import {Pipe} from "../../models/pipe/pipe";
-import {Bird} from "../../models/bird/bird";
+import { Pipe } from "../../models/pipe/pipe";
+import { Bird } from "../../models/bird/bird";
 
 export class MainScene extends Scene {
     private player: Bird;
@@ -15,14 +15,15 @@ export class MainScene extends Scene {
     private grounds: SceneObject[];
     private gameOver: boolean;
 
-    constructor(params: any) {
+    constructor(params: { [key: string]: any }) {
         super(params);
+        this.player = this.generatePlayer();
     }
 
     private generateGround(lastGroundPositinX = 0): SceneObject {
         const ground = new SceneObject({
-            position: {x: lastGroundPositinX, y: 260},
-            size: {height: 112, width: 336},
+            position: { x: lastGroundPositinX, y: 260 },
+            size: { height: 112, width: 336 },
             name: 'ground',
             texture: 'ground.png',
             color: 'green'
@@ -55,20 +56,27 @@ export class MainScene extends Scene {
         return tubes;
     };
 
-    public init() {
-        this.sceneObjects = [];
-        this.gameOver = false;
-        this.tubes = [];
-        this.grounds = [];
-        this.player = new Bird({
-            position: {x: 30, y: projectConfig.HEIGHT / 2},
-            size: {height: 23, width: 32},
+    private generatePlayer(): Bird {
+        const bird = new Bird({
+            position: { x: 30, y: projectConfig.HEIGHT / 2 },
+            size: { height: 23, width: 32 },
             color: 'red',
             name: 'bird',
             texture: 'bird.png',
             control: new BirdControl()
         });
-        this.appendSceneObject(this.player);
+
+        this.appendSceneObject(bird);
+
+        return bird;
+    }
+
+    public restart() {
+        this.sceneObjects = [];
+        this.gameOver = false;
+        this.tubes = [];
+        this.grounds = [];
+        this.player = this.generatePlayer()
     };
 
     public update() {
