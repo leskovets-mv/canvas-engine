@@ -14,6 +14,7 @@ export class MainScene extends Scene {
     private tubes: SceneObject[];
     private grounds: SceneObject[];
     private gameOver: boolean;
+    private score = -1;
 
     constructor(params: { [key: string]: any }) {
         super(params);
@@ -33,17 +34,18 @@ export class MainScene extends Scene {
     };
 
     private generateTubes(): SceneObject[] {
-        const gap = projectConfig.HEIGHT / 3;
+        this.score++;
+        let y: number;
         const tubes: SceneObject[] = [];
-        const y = -Math.floor(Math.random() * projectConfig.HEIGHT / 3);
         for (let i = 1; i < 3; i++) {
+            y = i % 2 ? Math.floor(Math.random() * projectConfig.HEIGHT / 2) + 100 : y;
             const tube = new Pipe({
                 position: {
                     x: projectConfig.WIDTH,
-                    y: i % 2 ? y : y + gap + projectConfig.HEIGHT / 2
+                    y: i % 2 ? -y : projectConfig.HEIGHT + 60 - y
                 },
                 size: {
-                    height: projectConfig.HEIGHT / 2,
+                    height: projectConfig.HEIGHT,
                     width: 30
                 },
                 color: 'black',
@@ -77,6 +79,7 @@ export class MainScene extends Scene {
         this.tubes = [];
         this.grounds = [];
         this.player = this.generatePlayer()
+        this.score = -1;
     };
 
     public update() {
@@ -105,6 +108,8 @@ export class MainScene extends Scene {
                 }
                 this.context.fillStyle = 'black';
             });
+            this.context.fillText(`Счёт: ${this.score}`, 40, 40)
+
             this.grounds.forEach((ground, index) => {
                 if (this.player.isCollision(ground)) {
                     this.gameOver = true;
