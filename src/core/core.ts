@@ -1,10 +1,10 @@
-import {SceneInterface} from "./scene/scene.interface";
-import {Scene} from "./scene/scene";
+import {Scene} from "./components/scene/scene";
 
-export class Engine {
+export class Core {
     private canvas: any = <HTMLCanvasElement>document.createElement('canvas');
     public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
-    public scene: Scene;
+    public scenes: { [key: string]: Scene } = {};
+    private activeScene: Scene;
     private readonly width: number;
     private readonly height: number;
 
@@ -18,13 +18,19 @@ export class Engine {
         this.update();
     }
 
-    public setScene(scene: SceneInterface): void {
-        this.scene = new Scene(scene);
+    public setActiveScene(scene: string): void {
+        if (!this.scenes[scene]) return;
+        this.activeScene = this.scenes[scene];
+        this.activeScene.init();
+    }
+
+    public appendScene(scene: { name: string, scene: Scene }): void {
+        this.scenes[scene.name] = scene.scene;
     }
 
     public update(): void {
-        if(this.scene){
-            this.scene.update()
+        if (this.activeScene) {
+            this.activeScene.update();
         }
         requestAnimationFrame(this.update.bind(this))
     }

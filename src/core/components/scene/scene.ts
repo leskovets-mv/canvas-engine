@@ -1,12 +1,12 @@
 import {SceneInterface} from "./scene.interface";
-import {SceneObjectInterface} from "./object/sceneObject.interface";
+import {SceneObjectInterface} from "../scene-object/scene-object.interface";
 
 export class Scene implements SceneInterface {
     public sceneObjects: SceneObjectInterface[];
     public imageList: { [p: string]: HTMLElement } = {};
     public background: string;
-    public update: () => void;
     public context: CanvasRenderingContext2D;
+    public setActiveScene: (sceneName: string) => void;
 
     constructor(params: any) {
         if (params.background) {
@@ -16,7 +16,9 @@ export class Scene implements SceneInterface {
         if (params.update) {
             this.update = params.update
         }
+        this.setActiveScene = params.setActiveScene;
         this.context = params.context;
+        this.init();
     }
 
     public uploadImage(image: string, pathFile: string): void {
@@ -43,6 +45,12 @@ export class Scene implements SceneInterface {
         if (gameObjectIndex > -1) {
             this.sceneObjects.splice(gameObjectIndex, 1)
         }
+    }
+
+    init(): void {
+    }
+
+    update(): void {
     }
 }
 

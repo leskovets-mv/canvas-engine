@@ -1,5 +1,5 @@
 import {PositionInterface} from "../../interfaces/position.interface";
-import {SceneObjectInterface} from "./sceneObject.interface";
+import {SceneObjectInterface} from "./scene-object.interface";
 import {SizeInterface} from "../../interfaces/size.interface";
 
 export class SceneObject {

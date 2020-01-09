@@ -1,11 +1,11 @@
-import {SceneObjectInterface} from "../../core/scene/object/sceneObject.interface";
-import {SceneObject} from "../../core/scene/object/sceneObject";
+import {SceneObjectInterface} from "../../core/components/scene-object/scene-object.interface";
+import {SceneObject} from "../../core/components/scene-object/scene-object";
 import {BirdControlInterface} from "./birdControlInterface";
 
 export class Bird extends SceneObject implements SceneObjectInterface {
-    texture: string;
-    control: BirdControlInterface;
-    coldDown: number = 0;
+    public texture: string;
+    public control: BirdControlInterface;
+    private coldDown: number = 0;
 
     constructor({control, ...params}: any) {
         super(params);

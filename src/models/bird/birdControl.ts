@@ -1,19 +1,26 @@
 import {BirdControlInterface} from "./birdControlInterface";
 
-export function BirdControl(): BirdControlInterface {
-    const control = {jump: false};
+export class BirdControl implements BirdControlInterface {
+    public jump: boolean;
 
-    document.addEventListener('keydown', event => {
+    constructor() {
+        this.init();
+    }
+
+    private keyPressHandler(event: any) {
         if (event.keyCode === 32) {
-            control.jump = true;
+            this.jump = true;
         }
+    }
 
-        document.addEventListener('keyup', event => {
-            if (event.keyCode === 32) {
-                control.jump = false;
-            }
-        })
-    });
+    private keyUpHandler(event: any) {
+        if (event.keyCode === 32) {
+            this.jump = false;
+        }
+    }
 
-    return control;
+    private init() {
+        document.addEventListener('keypress', this.keyPressHandler);
+        document.addEventListener('keyup', this.keyUpHandler);
+    }
 }
