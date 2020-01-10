@@ -1,8 +1,8 @@
 import {SceneObjectControl} from "../../core/components/scene-object/scene-object.control";
 
 export class ButtonControl extends SceneObjectControl {
-    private clientX: number;
-    private clientY: number;
+    public clientX: number;
+    public clientY: number;
 
     public mouseUpHandler(event: MouseEvent) {
         this.clientX = null;

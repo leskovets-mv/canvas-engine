@@ -1,7 +1,7 @@
-import {environments} from "../../environments/environments";
-import {ButtonControl} from "../controls/button.control";
-import {Scene} from "../../core/components/scene/scene";
-import {ButtonModel} from "../models/button.model";
+import { environments } from "../../environments/environments";
+import { ButtonControl } from "../controls/button.control";
+import { Scene } from "../../core/components/scene/scene";
+import { ButtonModel } from "../models/button.model";
 
 export default class MenuScene extends Scene {
     public start: boolean;
@@ -9,8 +9,6 @@ export default class MenuScene extends Scene {
 
     constructor(params: any) {
         super(params);
-        this.button = new ButtonModel({control: new ButtonControl()});
-        this.appendSceneObject(this.button);
     }
 
     public update(): void {
@@ -19,16 +17,41 @@ export default class MenuScene extends Scene {
             this.context.drawImage(this.imageList['background'], 0, 0, environments.WIDTH, environments.HEIGHT);
         }
         this.sceneObjects.forEach(sceneObject => {
+            this.context.font = 'bold 20px sans-serif';
+            this.context.textAlign = 'center';
+            this.context.fillStyle = sceneObject.color;
+            this.context.fillRect(
+                sceneObject.position.x,
+                sceneObject.position.y,
+                sceneObject.size.width,
+                sceneObject.size.height
+            )
+            this.context.fillStyle = 'black'
+            if (sceneObject.text) {
+                this.context.fillText(
+                    sceneObject.text,
+                    sceneObject.position.x + sceneObject.size.width / 2,
+                    sceneObject.position.y + sceneObject.size.height / 2 + 10
+                );
+            }
             sceneObject.update();
         });
-        this.context.textAlign = 'center';
-        this.context.fillText('Нажмите на экран для начала игры', environments.WIDTH / 2, environments.HEIGHT / 2);
+
         if (this.button.start) {
             this.setActiveScene('main');
         }
     }
 
     public restart(): void {
+        this.button = new ButtonModel({
+            control: new ButtonControl(),
+            position: { x: environments.WIDTH / 2 - 150, y: environments.HEIGHT / 2 - 50 },
+            size: { width: 300, height: 100 },
+            name: 'button',
+            text: 'Начать игру',
+            color: '#ccc'
+        });
+        this.appendSceneObject(this.button);
         this.start = false;
     }
 }

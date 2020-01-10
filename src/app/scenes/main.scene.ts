@@ -1,5 +1,4 @@
-import {SceneObjectInterface} from "../../core/components/scene-object/scene-object.interface";
-import {SceneObject} from "../../core/components/scene-object/scene-object";
+import { SceneObject } from "../../core/components/scene-object/scene-object";
 import {environments} from "../../environments/environments";
 import {Scene} from "../../core/components/scene/scene";
 import {BirdControl} from "../controls/bird.control";
@@ -10,7 +9,7 @@ export default class MainScene extends Scene {
     private player: BirdModel;
     public background: string;
     public imageList: { [p: string]: HTMLImageElement };
-    public sceneObjects: SceneObjectInterface[] = [];
+    public sceneObjects: SceneObject[] = [];
     private tubes: SceneObject[];
     private grounds: SceneObject[];
     private gameOver: boolean;
@@ -18,7 +17,6 @@ export default class MainScene extends Scene {
 
     constructor(params: { [key: string]: any }) {
         super(params);
-        this.player = this.generatePlayer();
     }
 
     private generateGround(lastGroundPositionX = 0): SceneObject {

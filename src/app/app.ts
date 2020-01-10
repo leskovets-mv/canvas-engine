@@ -11,13 +11,11 @@ const game = new Game({
 const menuScene = new MenuScene({
     background: 'background.png',
     context: game.context,
-    setActiveScene: game.setActiveScene.bind(game)
 });
 
 const mainScene = new MainScene({
     background: 'background.png',
     context: game.context,
-    setActiveScene: game.setActiveScene.bind(game)
 });
 
 game.appendScene({name: 'main', scene: mainScene});

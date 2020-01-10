@@ -1,8 +1,8 @@
-import {SceneObjectInterface} from "../scene-object/scene-object.interface";
-import {SceneInterface} from "./scene.interface";
+import { SceneObject } from "../scene-object/scene-object";
+import { SceneInterface } from "./scene.interface";
 
 export class Scene implements SceneInterface {
-    public sceneObjects: SceneObjectInterface[] = [];
+    public sceneObjects: SceneObject[] = [];
     public imageList: { [p: string]: any } = {};
     public background: string;
     public context: CanvasRenderingContext2D;
@@ -31,18 +31,19 @@ export class Scene implements SceneInterface {
         img.src = './assets/' + pathFile;
     }
 
-    public appendSceneObjects(sceneObject: SceneObjectInterface[]): void {
+    public appendSceneObjects(sceneObject: SceneObject[]): void {
         this.sceneObjects.push(...sceneObject);
     }
 
-    public appendSceneObject(gameObject: SceneObjectInterface): void {
-        this.sceneObjects.push(gameObject);
+    public appendSceneObject(sceneObject: SceneObject): void {
+        this.sceneObjects.push(sceneObject);
     }
 
-    public destroySceneObject(gameObject: SceneObjectInterface): void {
-        const gameObjectIndex = this.sceneObjects.indexOf(gameObject);
-        if (gameObjectIndex > -1) {
-            this.sceneObjects.splice(gameObjectIndex, 1)
+    public destroySceneObject(sceneObject: SceneObject): void {
+        const sceneObjectIndex = this.sceneObjects.indexOf(sceneObject);
+        if (sceneObjectIndex > -1) {
+            this.sceneObjects[sceneObjectIndex].removeControl();
+            this.sceneObjects.splice(sceneObjectIndex, 1)
         }
     }
 

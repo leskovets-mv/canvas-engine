@@ -3,11 +3,12 @@ import {SceneObjectControl} from "../../core/components/scene-object/scene-objec
 export class BirdControl extends SceneObjectControl {
     public isJump = false;
 
-    public mouseUpHandler(event: MouseEvent) {
+    public mouseUpHandler() {
         this.isJump = false;
     }
 
-    public mouseDownHandler(event: MouseEvent) {
+    public mouseDownHandler() {
+        console.log(123)
         this.isJump = true;
     }
 

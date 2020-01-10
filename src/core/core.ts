@@ -20,12 +20,18 @@ export default class Core {
 
     public setActiveScene(scene: string): void {
         if (!this.scenes[scene]) return;
+        if (this.activeScene) {
+            this.activeScene.sceneObjects.forEach(sceneObject => {
+                this.activeScene.destroySceneObject(sceneObject)
+            });
+        }
         this.activeScene = this.scenes[scene];
         this.activeScene.restart();
     }
 
-    public appendScene(scene: { name: string, scene: Scene }): void {
-        this.scenes[scene.name] = scene.scene;
+    public appendScene({ name, scene }): void {
+        scene.setActiveScene = this.setActiveScene.bind(this);
+        this.scenes[name] = scene
     }
 
     public update(): void {
