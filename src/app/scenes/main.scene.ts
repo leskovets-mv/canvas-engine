@@ -21,9 +21,9 @@ export default class MainScene extends Scene {
         this.player = this.generatePlayer();
     }
 
-    private generateGround(lastGroundPositinX = 0): SceneObject {
+    private generateGround(lastGroundPositionX = 0): SceneObject {
         const ground = new SceneObject({
-            position: {x: lastGroundPositinX, y: 260},
+            position: {x: lastGroundPositionX, y: 260},
             size: {height: 112, width: 336},
             name: 'ground',
             texture: 'ground.png',
