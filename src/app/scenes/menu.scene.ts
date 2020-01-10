@@ -1,7 +1,7 @@
-import {Scene} from "../../core/components/scene/scene";
 import {environments} from "../../environments/environments";
-import {ButtonModel} from "../models/button.model";
 import {ButtonControl} from "../controls/button.control";
+import {Scene} from "../../core/components/scene/scene";
+import {ButtonModel} from "../models/button.model";
 
 export default class MenuScene extends Scene {
     public start: boolean;
@@ -9,20 +9,7 @@ export default class MenuScene extends Scene {
 
     constructor(params: any) {
         super(params);
-        this.button = new ButtonModel({
-            position: {
-                x: 0,
-                y: 0
-            },
-            size: {
-                height: 100,
-                width: 100
-            },
-            color: 'black',
-            name: 'button',
-            texture: '',
-            control: new ButtonControl()
-        });
+        this.button = new ButtonModel({control: new ButtonControl()});
         this.appendSceneObject(this.button);
     }
 

@@ -1,5 +1,4 @@
 import {PositionInterface} from "../../util/interfaces/position.interface";
-import {SceneObjectControl} from "./scene-object.control";
 import {SizeInterface} from "../../util/interfaces/size.interface";
 import {SceneObjectInterface} from "./scene-object.interface";
 
@@ -12,11 +11,11 @@ export class SceneObject implements SceneObjectInterface {
     public control: any;
 
     constructor(params: { [key: string]: any }) {
-        this.position = params.position;
-        this.size = params.size;
-        this.color = params.color;
-        this.name = params.name;
-        this.texture = params.texture;
+        this.position = params.position || {};
+        this.size = params.size || {};
+        this.color = params.color || '';
+        this.name = params.name || '';
+        this.texture = params.texture || '';
         if (params.update) {
             this.update = params.update;
         }
