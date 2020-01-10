@@ -1,6 +1,6 @@
 import { SceneObject } from "../../core/components/scene-object/scene-object";
 
-export class Pipe extends SceneObject {
+export class PipeModel extends SceneObject {
     constructor(params: { [key: string]: any }) {
         super(params);
     }

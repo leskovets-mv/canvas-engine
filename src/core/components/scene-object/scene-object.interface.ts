@@ -1,5 +1,6 @@
-import { PositionInterface } from "../../interfaces/position.interface";
-import { SizeInterface } from "../../interfaces/size.interface";
+import {PositionInterface} from "../../util/interfaces/position.interface";
+import {SceneObjectControl} from "./scene-object.control";
+import {SizeInterface} from "../../util/interfaces/size.interface";
 
 export interface SceneObjectInterface {
     position: PositionInterface;
@@ -7,5 +8,6 @@ export interface SceneObjectInterface {
     color: string;
     name: string;
     texture: string;
-    update?: () => void;
+    update: () => void;
+    control: SceneObjectControl
 }

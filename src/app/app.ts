@@ -1,11 +1,11 @@
-import {MainScene} from "./scenes/main/main.scene";
-import {MenuScene} from "./scenes/menu/menu.scene";
-import projectConfig from './project.config'
-import {Core} from "./core/core";
+import {environments} from "../environments/environments";
+import MenuScene from "./scenes/menu.scene";
+import MainScene from "./scenes/main.scene";
+import Game from "../core/core";
 
-const game = new Core({
-    width: projectConfig.WIDTH,
-    height: projectConfig.HEIGHT,
+const game = new Game({
+    width: environments.WIDTH,
+    height: environments.HEIGHT,
 });
 
 const menuScene = new MenuScene({

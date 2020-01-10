@@ -1,13 +1,15 @@
-import { PositionInterface } from "../../interfaces/position.interface";
-import { SceneObjectInterface } from "./scene-object.interface";
-import { SizeInterface } from "../../interfaces/size.interface";
+import {PositionInterface} from "../../util/interfaces/position.interface";
+import {SceneObjectControl} from "./scene-object.control";
+import {SizeInterface} from "../../util/interfaces/size.interface";
+import {SceneObjectInterface} from "./scene-object.interface";
 
-export class SceneObject {
+export class SceneObject implements SceneObjectInterface {
     public size: SizeInterface;
     public position: PositionInterface;
     public color: string;
     public texture: string;
     public name: string;
+    public control: any;
 
     constructor(params: { [key: string]: any }) {
         this.position = params.position;
@@ -17,6 +19,10 @@ export class SceneObject {
         this.texture = params.texture;
         if (params.update) {
             this.update = params.update;
+        }
+        if (params.control) {
+            this.control = params.control;
+            this.setControl();
         }
     }
 
@@ -32,6 +38,17 @@ export class SceneObject {
             this.position.y + this.size.height > object.position.y
     }
 
-    public update(): void {
+
+    public setControl(): void {
+        if (this.control) {
+            document.addEventListener('keydown', this.control.keyDownHandler.bind(this));
+            document.addEventListener('keyup', this.control.keyUpHandler.bind(this));
+            document.addEventListener('click', this.control.clickHandler.bind(this));
+            document.addEventListener('mouseup', this.control.mouseUpHandler.bind(this));
+            document.addEventListener('mousedown', this.control.mouseDownHandler.bind(this));
+        }
+    }
+
+    public update() {
     };
 }

@@ -1,13 +1,13 @@
-import { SceneObjectInterface } from "../../core/components/scene-object/scene-object.interface";
-import { SceneObject } from "../../core/components/scene-object/scene-object";
-import { BirdControl } from "../../models/bird/birdControl";
-import { Scene } from "../../core/components/scene/scene";
-import projectConfig from "../../project.config";
-import { Pipe } from "../../models/pipe/pipe";
-import { Bird } from "../../models/bird/bird";
+import {SceneObjectInterface} from "../../core/components/scene-object/scene-object.interface";
+import {SceneObject} from "../../core/components/scene-object/scene-object";
+import {environments} from "../../environments/environments";
+import {Scene} from "../../core/components/scene/scene";
+import {BirdControl} from "../controls/bird.control";
+import {PipeModel} from "../models/pipe.model";
+import {BirdModel} from "../models/bird.model";
 
-export class MainScene extends Scene {
-    private player: Bird;
+export default class MainScene extends Scene {
+    private player: BirdModel;
     public background: string;
     public imageList: { [p: string]: HTMLImageElement };
     public sceneObjects: SceneObjectInterface[] = [];
@@ -23,8 +23,8 @@ export class MainScene extends Scene {
 
     private generateGround(lastGroundPositinX = 0): SceneObject {
         const ground = new SceneObject({
-            position: { x: lastGroundPositinX, y: 260 },
-            size: { height: 112, width: 336 },
+            position: {x: lastGroundPositinX, y: 260},
+            size: {height: 112, width: 336},
             name: 'ground',
             texture: 'ground.png',
             color: 'green'
@@ -38,14 +38,14 @@ export class MainScene extends Scene {
         let y: number;
         const tubes: SceneObject[] = [];
         for (let i = 1; i < 3; i++) {
-            y = i % 2 ? Math.floor(Math.random() * projectConfig.HEIGHT / 2) + 100 : y;
-            const tube = new Pipe({
+            y = i % 2 ? Math.floor(Math.random() * environments.HEIGHT / 2) + 100 : y;
+            const tube = new PipeModel({
                 position: {
-                    x: projectConfig.WIDTH,
-                    y: i % 2 ? -y : projectConfig.HEIGHT + 60 - y
+                    x: environments.WIDTH,
+                    y: i % 2 ? -y : environments.HEIGHT + 60 - y
                 },
                 size: {
-                    height: projectConfig.HEIGHT,
+                    height: environments.HEIGHT,
                     width: 30
                 },
                 color: 'black',
@@ -58,10 +58,10 @@ export class MainScene extends Scene {
         return tubes;
     };
 
-    private generatePlayer(): Bird {
-        const bird = new Bird({
-            position: { x: 30, y: projectConfig.HEIGHT / 2 },
-            size: { height: 23, width: 32 },
+    private generatePlayer(): BirdModel {
+        const bird = new BirdModel({
+            position: {x: 30, y: environments.HEIGHT / 2},
+            size: {height: 23, width: 32},
             color: 'red',
             name: 'bird',
             texture: 'bird.png',
@@ -78,15 +78,15 @@ export class MainScene extends Scene {
         this.gameOver = false;
         this.tubes = [];
         this.grounds = [];
-        this.player = this.generatePlayer()
+        this.player = this.generatePlayer();
         this.score = -1;
     };
 
     public update() {
         if (!this.gameOver) {
-            this.context.clearRect(0, 0, projectConfig.WIDTH, projectConfig.HEIGHT);
+            this.context.clearRect(0, 0, environments.WIDTH, environments.HEIGHT);
             if (this.imageList['background']) {
-                this.context.drawImage(this.imageList['background'], 0, 0, projectConfig.WIDTH, projectConfig.HEIGHT);
+                this.context.drawImage(this.imageList['background'], 0, 0, environments.WIDTH, environments.HEIGHT);
             }
             this.player.update();
 
@@ -108,8 +108,7 @@ export class MainScene extends Scene {
                 }
                 this.context.fillStyle = 'black';
             });
-            this.context.fillText(`Счёт: ${this.score}`, 40, 40)
-
+            this.context.fillText(`Счёт: ${this.score}`, 40, 40);
             this.grounds.forEach((ground, index) => {
                 if (this.player.isCollision(ground)) {
                     this.gameOver = true;

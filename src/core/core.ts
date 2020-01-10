@@ -1,6 +1,6 @@
 import { Scene } from "./components/scene/scene";
 
-export class Core {
+export default class Core {
     private canvas: HTMLCanvasElement = document.createElement('canvas');
     public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
     public scenes: { [key: string]: Scene } = {};

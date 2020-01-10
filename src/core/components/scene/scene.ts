@@ -1,8 +1,8 @@
-import { SceneInterface } from "./scene.interface";
-import { SceneObjectInterface } from "../scene-object/scene-object.interface";
+import {SceneObjectInterface} from "../scene-object/scene-object.interface";
+import {SceneInterface} from "./scene.interface";
 
 export class Scene implements SceneInterface {
-    public sceneObjects: SceneObjectInterface[];
+    public sceneObjects: SceneObjectInterface[] = [];
     public imageList: { [p: string]: any } = {};
     public background: string;
     public context: CanvasRenderingContext2D;
