@@ -83,63 +83,60 @@ export default class MainScene extends Scene {
     };
 
     public update() {
-        if (!this.gameOver) {
-            this.context.clearRect(0, 0, environments.WIDTH, environments.HEIGHT);
-            if (this.imageList['background']) {
-                this.context.drawImage(this.imageList['background'], 0, 0, environments.WIDTH, environments.HEIGHT);
-            }
-            this.player.update();
+        if (this.gameOver) return this.setActiveScene('menu');
 
-            this.sceneObjects.forEach(sceneObject => {
-                this.uploadImage(sceneObject.name, sceneObject.texture);
-                this.context.fillStyle = sceneObject.color;
-                if (sceneObject.texture === '') {
-                    this.context.fillRect(sceneObject.position.x, sceneObject.position.y, sceneObject.size.width, sceneObject.size.height);
-                } else if (sceneObject.texture) {
-                    if (this.imageList[sceneObject.name]) {
-                        this.context.drawImage(
-                            this.imageList[sceneObject.name],
-                            sceneObject.position.x,
-                            sceneObject.position.y,
-                            sceneObject.size.width,
-                            sceneObject.size.height
-                        )
-                    }
+        this.context.clearRect(0, 0, environments.WIDTH, environments.HEIGHT);
+        if (this.imageList['background']) {
+            this.context.drawImage(this.imageList['background'], 0, 0, environments.WIDTH, environments.HEIGHT);
+        }
+        this.player.update();
+        this.sceneObjects.forEach(sceneObject => {
+            this.uploadImage(sceneObject.name, sceneObject.texture);
+            this.context.fillStyle = sceneObject.color;
+            if (sceneObject.texture === '') {
+                this.context.fillRect(sceneObject.position.x, sceneObject.position.y, sceneObject.size.width, sceneObject.size.height);
+            } else if (sceneObject.texture) {
+                if (this.imageList[sceneObject.name]) {
+                    this.context.drawImage(
+                        this.imageList[sceneObject.name],
+                        sceneObject.position.x,
+                        sceneObject.position.y,
+                        sceneObject.size.width,
+                        sceneObject.size.height
+                    )
                 }
-                this.context.fillStyle = 'black';
-            });
-            this.context.fillText(`Счёт: ${this.score}`, 40, 40);
-            this.grounds.forEach((ground, index) => {
-                if (this.player.isCollision(ground)) {
-                    this.gameOver = true;
-                }
-                if (ground.position.x + ground.size.width > 0) {
-                    ground.position.x--;
-                } else {
-                    this.grounds.splice(index, 1)
-                }
-            });
-            this.tubes.forEach((tube, index) => {
-                if (this.player.isCollision(tube)) {
-                    this.gameOver = true;
-                }
-                if (tube.position.x + tube.size.width < 0) {
-                    this.destroySceneObject(tube);
-                    this.tubes.splice(index, 1)
-                }
-                tube.update();
-            });
-            if (!this.tubes.length) {
-                this.tubes.push(...this.generateTubes())
             }
-            if (!this.grounds.length) {
-                this.grounds.push(this.generateGround());
-            } else if (this.grounds.length < 3) {
-                const lastGround = this.grounds[this.grounds.length - 1];
-                this.grounds.push(this.generateGround(lastGround.position.x + lastGround.size.width - 1));
+            this.context.fillStyle = 'black';
+        });
+        this.context.fillText(`Счёт: ${this.score}`, 40, 40);
+        this.grounds.forEach((ground, index) => {
+            if (this.player.isCollision(ground)) {
+                this.gameOver = true;
             }
-        } else {
-            this.setActiveScene('menu');
+            if (ground.position.x + ground.size.width > 0) {
+                ground.position.x--;
+            } else {
+                this.grounds.splice(index, 1)
+            }
+        });
+        this.tubes.forEach((tube, index) => {
+            if (this.player.isCollision(tube)) {
+                this.gameOver = true;
+            }
+            if (tube.position.x + tube.size.width < 0) {
+                this.destroySceneObject(tube);
+                this.tubes.splice(index, 1)
+            }
+            tube.update();
+        });
+        if (!this.tubes.length) {
+            this.tubes.push(...this.generateTubes())
+        }
+        if (!this.grounds.length) {
+            this.grounds.push(this.generateGround());
+        } else if (this.grounds.length < 3) {
+            const lastGround = this.grounds[this.grounds.length - 1];
+            this.grounds.push(this.generateGround(lastGround.position.x + lastGround.size.width - 1));
         }
     };
 }
