@@ -1,4 +1,4 @@
-import {SceneObjectControl} from "../../core/components/scene-object/scene-object.control";
+import {SceneObjectControl} from "../../core/util/controls/scene-object.control";
 
 export class ButtonControl extends SceneObjectControl {
     public clientX: number;

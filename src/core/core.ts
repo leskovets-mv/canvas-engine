@@ -7,6 +7,7 @@ export default class Core {
     private activeScene: Scene;
     private readonly width: number;
     private readonly height: number;
+    private requestId: number;
 
     constructor(params: { width: number, height: number, background?: string }) {
         this.width = params.width;
@@ -15,18 +16,17 @@ export default class Core {
         this.canvas.width = this.width;
         this.context = this.canvas.getContext('2d');
         document.body.appendChild(this.canvas);
-        this.update();
     }
 
     public setActiveScene(scene: string): void {
+        cancelAnimationFrame(this.requestId)
         if (!this.scenes[scene]) return;
         if (this.activeScene) {
-            this.activeScene.sceneObjects.forEach(sceneObject => {
-                this.activeScene.destroySceneObject(sceneObject)
-            });
+            this.activeScene.clearLayer('default')
         }
         this.activeScene = this.scenes[scene];
-        this.activeScene.restart();
+        this.activeScene.init();
+        this.update();
     }
 
     public appendScene({ name, scene }): void {
@@ -38,6 +38,6 @@ export default class Core {
         if (this.activeScene) {
             this.activeScene.update();
         }
-        requestAnimationFrame(this.update.bind(this))
+        this.requestId = window.requestAnimationFrame(this.update.bind(this))
     }
 }

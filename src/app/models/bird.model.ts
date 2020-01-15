@@ -18,7 +18,7 @@ export class BirdModel extends SceneObject {
     }
 
     private gravity(): void {
-        this.direction({y: 1});
+        this.direction({y: 0.7});
     }
 
     public update() {

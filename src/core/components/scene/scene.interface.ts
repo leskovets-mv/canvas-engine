@@ -1,13 +1,14 @@
-import {SceneObjectInterface} from "../scene-object/scene-object.interface";
+import { SceneObjectInterface } from "../scene-object/scene-object.interface";
+import { Layer } from "../layer/layer";
 
 export interface SceneInterface {
     setActiveScene: (sceneName: string) => void,
-    sceneObjects: SceneObjectInterface[],
-    imageList: { [ket: string]: HTMLElement },
+    imageList: { [name: string]: HTMLElement },
     background: string,
     context: CanvasRenderingContext2D,
+    layers: { [name: string]: Layer };
 
     update(): void,
 
-    restart(): void,
+    init(): void,
 }

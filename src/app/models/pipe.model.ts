@@ -6,6 +6,6 @@ export class PipeModel extends SceneObject {
     }
 
     public update(): void {
-        this.position.x -= 5;
+        this.position.x -= 2;
     }
 }

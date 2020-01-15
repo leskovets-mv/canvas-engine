@@ -10,21 +10,23 @@ export class SceneObject implements SceneObjectInterface {
     public name: string;
     public control: any;
     public text: string;
-    public keyDownHandler: (e: KeyboardEvent) => void;
-    public keyUpHandler: (e: KeyboardEvent) => void;
-    public clickHandler: (e: MouseEvent) => void;
-    public mouseUpHandler: (e: MouseEvent) => void;
-    public mouseDownHandler: (e: MouseEvent) => void;
+    private keyDownHandler: (e: KeyboardEvent) => void;
+    private keyUpHandler: (e: KeyboardEvent) => void;
+    private clickHandler: (e: MouseEvent) => void;
+    private mouseUpHandler: (e: MouseEvent) => void;
+    private mouseDownHandler: (e: MouseEvent) => void;
 
     constructor(params: { [key: string]: any }) {
         this.position = params.position || {};
         this.size = params.size || {};
-        this.color = params.color || '';
+        this.color = params.color || 'transparent';
         this.name = params.name || '';
         if (params.text) {
             this.text = params.text;
         }
-        this.texture = params.texture || '';
+        if (params.texture) {
+            this.texture = params.texture;
+        }
         if (params.update) {
             this.update = params.update;
         }
