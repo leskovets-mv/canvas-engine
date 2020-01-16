@@ -1,4 +1,4 @@
-import { Scene } from "./components/scene/scene";
+import {Scene} from "./components/scene/scene";
 
 export default class Core {
     private canvas: HTMLCanvasElement = document.createElement('canvas');
@@ -9,9 +9,9 @@ export default class Core {
     private readonly height: number;
     private requestId: number;
 
-    constructor(params: { width: number, height: number, background?: string }) {
-        this.width = params.width;
-        this.height = params.height;
+    constructor(options: { width: number, height: number, background?: string }) {
+        this.width = options.width;
+        this.height = options.height;
         this.canvas.height = this.height;
         this.canvas.width = this.width;
         this.context = this.canvas.getContext('2d');
@@ -19,7 +19,7 @@ export default class Core {
     }
 
     public setActiveScene(scene: string): void {
-        cancelAnimationFrame(this.requestId)
+        cancelAnimationFrame(this.requestId);
         if (!this.scenes[scene]) return;
         if (this.activeScene) {
             this.activeScene.clearLayer('default')
@@ -29,15 +29,15 @@ export default class Core {
         this.update();
     }
 
-    public appendScene({ name, scene }): void {
+    public appendScene({name, scene}): void {
         scene.setActiveScene = this.setActiveScene.bind(this);
-        this.scenes[name] = scene
+        this.scenes[name] = scene;
     }
 
     public update(): void {
         if (this.activeScene) {
             this.activeScene.update();
         }
-        this.requestId = window.requestAnimationFrame(this.update.bind(this))
+        this.requestId = window.requestAnimationFrame(this.update.bind(this));
     }
 }

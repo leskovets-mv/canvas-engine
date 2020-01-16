@@ -1,11 +1,11 @@
-import { SceneObject } from "../../core/components/scene-object/scene-object";
+import {SceneObject} from "../../../../core/components/scene-object/scene-object";
 
 export class BirdModel extends SceneObject {
     private coldDown: number = 0;
     private isJump: boolean;
 
-    constructor(params: { [key: string]: any }) {
-        super(params);
+    constructor(options: { [key: string]: any }) {
+        super(options);
         this.gravity();
     }
 

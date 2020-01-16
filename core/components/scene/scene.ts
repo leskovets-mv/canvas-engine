@@ -1,27 +1,24 @@
-import { environments } from "../../../environments/environments";
-import { SceneObject } from "../scene-object/scene-object";
-import { SceneInterface } from "./scene.interface";
-import { Layer } from "../layer/layer";
+import {environments} from "../../../src/environments/environments";
+import {SceneObject} from "../scene-object/scene-object";
+import {SceneInterface} from "./scene.interface";
+import {Layer} from "../layer/layer";
 
 export class Scene implements SceneInterface {
     public layers: { [name: string]: Layer } = {};
     public imageList: { [name: string]: any } = {};
-    public background: string;
     public context: CanvasRenderingContext2D;
     public setActiveScene: (sceneName: string) => void;
-    public init(): void { }
 
-    constructor(params: { [key: string]: any }) {
-        if (params.background) {
-            this.uploadImage('background', params.background);
-            this.background = params.background;
+    constructor(options) {
+        if (options.background) {
+            this.uploadImage('background', options.background);
         }
-        if (params.update) {
-            this.update = params.update
+        if (options.update) {
+            this.update = options.update
         }
         this.addLayer('default');
-        this.setActiveScene = params.setActiveScene;
-        this.context = params.context;
+        this.setActiveScene = options.setActiveScene;
+        this.context = options.context;
     }
 
     public addLayer(layerName: string) {
@@ -32,21 +29,21 @@ export class Scene implements SceneInterface {
     }
 
     public appendSceneObjectsToLayer(sceneObjects: SceneObject[], layerName: string = 'default'): void {
-        sceneObjects.forEach(sceneObject => this.uploadImage(sceneObject.name, sceneObject.texture))
-        this.layers[layerName].appendSceneObjects(sceneObjects)
+        sceneObjects.forEach(sceneObject => this.uploadImage(sceneObject.name, sceneObject.texture));
+        this.layers[layerName].appendSceneObjects(sceneObjects);
     }
 
     public appendSceneObjectToLayer(sceneObject: SceneObject, layerName: string = 'default'): void {
         this.uploadImage(sceneObject.name, sceneObject.texture);
-        this.layers[layerName].appendSceneObject(sceneObject)
+        this.layers[layerName].appendSceneObject(sceneObject);
     }
 
     public destroySceneObjectToLayer(sceneObject: SceneObject, layerName: string = 'default'): void {
-        this.layers[layerName].destroySceneObject(sceneObject)
+        this.layers[layerName].destroySceneObject(sceneObject);
     }
 
     public clearLayer(layerName: string = 'default') {
-        this.layers[layerName].clear()
+        this.layers[layerName].clear();
     }
 
     public update(): void {
@@ -62,7 +59,7 @@ export class Scene implements SceneInterface {
                     sceneObject.position.y,
                     sceneObject.size.width,
                     sceneObject.size.height
-                )
+                );
                 if (sceneObject.texture) {
                     if (this.imageList[sceneObject.name]) {
                         this.context.drawImage(
@@ -74,7 +71,7 @@ export class Scene implements SceneInterface {
                         )
                     }
                 }
-                this.context.fillStyle = 'black'
+                this.context.fillStyle = 'black';
                 if (sceneObject.text) {
                     this.context.font = 'bold 20px sans-serif';
                     this.context.textAlign = 'center';
@@ -98,6 +95,9 @@ export class Scene implements SceneInterface {
         });
 
         img.src = './assets/' + pathFile;
+    }
+
+    public init(): void {
     }
 }
 

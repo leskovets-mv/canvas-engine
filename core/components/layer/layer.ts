@@ -7,8 +7,8 @@ export class Layer implements LayerInterface {
     public layerObjects: SceneObject[] = [];
     public name: string;
 
-    constructor(params) {
-        this.name = params.name;
+    constructor(options) {
+        this.name = options.name;
     }
 
     public appendSceneObjects(sceneObject: SceneObject[]): void {
