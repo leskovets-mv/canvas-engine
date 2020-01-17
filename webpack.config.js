@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugins = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
         filename: 'bundle.[chunkhash].js',
         path: path.resolve(__dirname, 'public')
     },
-    devtool: false,
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'src'),
         port: 3000

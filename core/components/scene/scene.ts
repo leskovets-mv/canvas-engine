@@ -1,7 +1,7 @@
-import {environments} from "../../../src/environments/environments";
-import {SceneObject} from "../scene-object/scene-object";
-import {SceneInterface} from "./scene.interface";
-import {Layer} from "../layer/layer";
+import { environments } from "../../../src/environments/environments";
+import { SceneObject } from "../scene-object/scene-object";
+import { SceneInterface } from "./scene.interface";
+import { Layer } from "../layer/layer";
 
 export class Scene implements SceneInterface {
     public layers: { [name: string]: Layer } = {};
@@ -48,28 +48,35 @@ export class Scene implements SceneInterface {
 
     public update(): void {
         this.context.clearRect(0, 0, environments.WIDTH, environments.HEIGHT);
+
         if (this.imageList['background']) {
             this.context.drawImage(this.imageList['background'], 0, 0, environments.WIDTH, environments.HEIGHT);
         }
         for (let layerName in this.layers) {
             this.layers[layerName].layerObjects.forEach(sceneObject => {
+                this.context.save();
                 this.context.fillStyle = sceneObject.color;
+                if (sceneObject.rotate) {
+                    const translateX = sceneObject.position.x + sceneObject.size.height / 2
+                    const translateY = sceneObject.position.y + sceneObject.size.height / 2
+                    this.context.translate(translateX, translateY)
+                    this.context.rotate(sceneObject.rotate * Math.PI / 180);
+                    this.context.translate(-translateX, -translateY)
+                }
                 this.context.fillRect(
                     sceneObject.position.x,
                     sceneObject.position.y,
                     sceneObject.size.width,
                     sceneObject.size.height
                 );
-                if (sceneObject.texture) {
-                    if (this.imageList[sceneObject.name]) {
-                        this.context.drawImage(
-                            this.imageList[sceneObject.name],
-                            sceneObject.position.x,
-                            sceneObject.position.y,
-                            sceneObject.size.width,
-                            sceneObject.size.height
-                        )
-                    }
+                if (sceneObject.texture && this.imageList[sceneObject.name]) {
+                    this.context.drawImage(
+                        this.imageList[sceneObject.name],
+                        sceneObject.position.x,
+                        sceneObject.position.y,
+                        sceneObject.size.width,
+                        sceneObject.size.height
+                    )
                 }
                 this.context.fillStyle = 'black';
                 if (sceneObject.text) {
@@ -81,6 +88,7 @@ export class Scene implements SceneInterface {
                         sceneObject.position.y + sceneObject.size.height / 2 + 10
                     );
                 }
+                this.context.restore();
                 sceneObject.update();
             });
         }

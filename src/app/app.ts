@@ -1,7 +1,7 @@
-import {environments} from "../environments/environments";
-import MenuScene from "./components/scenes/menu.scene";
-import MainScene from "./components/scenes/main.scene";
 import Core from "../../core/core";
+import { environments } from "../environments/environments";
+import { MenuScene } from "./components/scenes/menu.scene";
+import { MainScene } from "./components/scenes/main.scene";
 
 const core = new Core({
     width: environments.WIDTH,
@@ -18,6 +18,6 @@ const mainScene = new MainScene({
     context: core.context,
 });
 
-core.appendScene({name: 'main', scene: mainScene});
-core.appendScene({name: 'menu', scene: menuScene});
+core.appendScene({ name: 'main', scene: mainScene });
+core.appendScene({ name: 'menu', scene: menuScene });
 core.setActiveScene('menu');

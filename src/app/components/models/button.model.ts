@@ -1,4 +1,4 @@
-import {SceneObject} from "../../../../core/components/scene-object/scene-object";
+import { SceneObject } from "../../../../core/components/scene-object/scene-object";
 
 export class ButtonModel extends SceneObject {
     public start: boolean;
@@ -10,6 +10,8 @@ export class ButtonModel extends SceneObject {
     }
 
     public update(): void {
-        this.start = this.clickObjectHandler({x: this.clientX, y: this.clientY});
+        if (this.clientX && this.clientY) {
+            this.start = this.clickObjectHandler({ x: this.clientX, y: this.clientY });
+        }
     }
 }

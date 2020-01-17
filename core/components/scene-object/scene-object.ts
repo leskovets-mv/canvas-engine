@@ -1,9 +1,10 @@
-import {PointInterface} from "../../util/interfaces/point.Interface";
-import {SizeInterface} from "../../util/interfaces/size.interface";
-import {SceneObjectInterface} from "./scene-object.interface";
-import {isCollision} from "../../util/math/math";
+import { PointInterface } from "../../util/interfaces/point.Interface";
+import { SizeInterface } from "../../util/interfaces/size.interface";
+import { SceneObjectInterface } from "./scene-object.interface";
+import { isClick, isCollision } from "../../util/math/math";
 
 export class SceneObject implements SceneObjectInterface {
+    public rotate: number;
     public size: SizeInterface;
     public position: PointInterface;
     public color: string;
@@ -11,7 +12,8 @@ export class SceneObject implements SceneObjectInterface {
     public name: string;
     public control: any;
     public text: string;
-    public isCollision: (object, current) => boolean;
+    public isCollision = isCollision;
+    public isClick = isClick;
     private readonly keyDownHandler: (e: KeyboardEvent) => void;
     private readonly keyUpHandler: (e: KeyboardEvent) => void;
     private readonly clickHandler: (e: MouseEvent) => void;
@@ -23,6 +25,7 @@ export class SceneObject implements SceneObjectInterface {
         this.size = options.size || {};
         this.color = options.color || 'transparent';
         this.name = options.name || '';
+        this.rotate = options.rotate || 0;
         if (options.text) {
             this.text = options.text;
         }
@@ -41,7 +44,7 @@ export class SceneObject implements SceneObjectInterface {
             this.mouseDownHandler = options.control.mouseDownHandler.bind(this);
             this.setControl();
         }
-        this.isCollision = isCollision
+        this.isClick = isClick
     }
 
     public direction(velocity: PointInterface): void {
@@ -50,7 +53,7 @@ export class SceneObject implements SceneObjectInterface {
     }
 
     public clickObjectHandler(target: PointInterface): boolean {
-        return this.isCollision(target, this);
+        return this.isClick(target, this);
     }
 
     public setControl(): void {

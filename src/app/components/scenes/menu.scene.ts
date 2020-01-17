@@ -1,9 +1,9 @@
-import {environments} from "../../../environments/environments";
-import {Scene} from "../../../../core/components/scene/scene";
-import {ButtonControl} from "../controls/button.control";
-import {ButtonModel} from "../models/button.model";
+import { environments } from "../../../environments/environments";
+import { Scene } from "../../../../core/components/scene/scene";
+import { ButtonControl } from "../controls/button.control";
+import { ButtonModel } from "../models/button.model";
 
-export default class MenuScene extends Scene {
+export class MenuScene extends Scene {
     public start: boolean;
     public button: ButtonModel;
 
@@ -22,8 +22,8 @@ export default class MenuScene extends Scene {
     public init(): void {
         this.button = new ButtonModel({
             control: new ButtonControl(),
-            position: {x: environments.WIDTH / 2 - 150, y: environments.HEIGHT / 2 - 50},
-            size: {width: 300, height: 100},
+            position: { x: environments.WIDTH / 2 - 150, y: environments.HEIGHT / 2 - 50 },
+            size: { width: 300, height: 100 },
             name: 'button',
             text: 'Начать игру',
             color: '#ccc'

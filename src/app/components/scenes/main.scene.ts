@@ -1,11 +1,11 @@
-import {environments} from "../../../environments/environments";
-import {Scene} from "../../../../core/components/scene/scene";
-import {BirdControl} from "../controls/bird.control";
-import {GroundModel} from "../models/ground.model";
-import {PipeModel} from "../models/pipe.model";
-import {BirdModel} from "../models/bird.model";
+import { environments } from "../../../environments/environments";
+import { Scene } from "../../../../core/components/scene/scene";
+import { BirdControl } from "../controls/bird.control";
+import { GroundModel } from "../models/ground.model";
+import { PipeModel } from "../models/pipe.model";
+import { BirdModel } from "../models/bird.model";
 
-export default class MainScene extends Scene {
+export class MainScene extends Scene {
     public background: string;
     private player: BirdModel;
     private pipes: PipeModel[];
@@ -19,8 +19,8 @@ export default class MainScene extends Scene {
 
     private generateGround(lastGroundPositionX = 0): GroundModel {
         const ground = new GroundModel({
-            position: {x: lastGroundPositionX, y: 260},
-            size: {height: 112, width: 336},
+            position: { x: lastGroundPositionX, y: 260 },
+            size: { height: 112, width: 336 },
             name: 'ground',
             texture: 'ground.png',
         });
@@ -56,8 +56,8 @@ export default class MainScene extends Scene {
 
     private generatePlayer(): BirdModel {
         const bird = new BirdModel({
-            position: {x: 30, y: environments.HEIGHT / 2},
-            size: {height: 23, width: 32},
+            position: { x: 30, y: environments.HEIGHT / 2 },
+            size: { height: 23, width: 32 },
             name: 'bird',
             texture: 'bird.png',
             control: new BirdControl()
