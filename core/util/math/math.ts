@@ -31,12 +31,31 @@ export function isCollision(object: SceneObjectInterface, current: SceneObjectIn
 
 export function isClick(mouse: PointInterface, target: SceneObjectInterface) {
     if (!mouse || !target) return;
-    console.log(this)
 
-    if (target.rotate) {
-    } else {
-        return mouse.x > target.position.x && mouse.y > target.position.y &&
-            mouse.x < target.position.x + target.size.width &&
-            mouse.y < target.position.y + target.size.height;
-    }
+    // if (target.rotate) {
+    return insideRotate(mouse, target)
+    // } else {
+    // return inside(mouse, target)
+    // }
 }
+
+const insideRotate = (mouse, target) => {
+    const { x, y } = mouse;
+    const { rotate } = target
+
+    const ax = Math.cos(rotate)
+    const ay = Math.sin(rotate)
+
+    return inside({
+        y: x * ax - y * ay,
+        x: x * ay + y * ax,
+    }, target)
+}
+
+const inside = (mouse, target) => {
+    console.log(mouse)
+    return mouse.x >= target.position.x && mouse.y >= target.position.y &&
+        mouse.x <= target.position.x + target.size.width &&
+        mouse.y <= target.position.y + target.size.height;
+}
+

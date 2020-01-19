@@ -55,11 +55,9 @@ export class Scene implements SceneInterface {
             this.layers[layerName].layerObjects.forEach(sceneObject => {
                 this.context.save();
                 if (sceneObject.rotate) {
-                    const translateX = sceneObject.position.x + sceneObject.size.height / 2
-                    const translateY = sceneObject.position.y + sceneObject.size.height / 2
-                    this.context.translate(translateX, translateY)
-                    this.context.rotate(sceneObject.rotate * Math.PI / 180);
-                    this.context.translate(-translateX, -translateY)
+                    this.context.translate(sceneObject.position.x, sceneObject.position.y)
+                    this.context.rotate(-sceneObject.rotate * Math.PI / 180);
+                    this.context.translate(-sceneObject.position.x, -sceneObject.position.y)
                 }
                 this.drawSceneObject(sceneObject)
                 this.context.restore();
@@ -134,15 +132,18 @@ export class Scene implements SceneInterface {
             0, 2 * Math.PI, true
         );
     }
+
     private drawEllipce(sceneObject): void {
         if (sceneObject.size.width < sceneObject.size.height) {
             this.context.translate(sceneObject.position.x, sceneObject.position.y);
             this.context.scale(sceneObject.size.width / sceneObject.size.height, 1)
             this.context.arc(0, 0, sceneObject.size.height / 2, 0, 2 * Math.PI, true);
+            this.context.translate(-sceneObject.position.x, -sceneObject.position.y);
         } else {
             this.context.translate(sceneObject.position.x, sceneObject.position.y);
             this.context.scale(1, sceneObject.size.width / sceneObject.size.height)
             this.context.arc(0, 0, sceneObject.size.width / 2, 0, 2 * Math.PI, true);
+            this.context.translate(-sceneObject.position.x, -sceneObject.position.y);
         }
     }
 

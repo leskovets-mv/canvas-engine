@@ -12,7 +12,7 @@ export class ButtonModel extends SceneObject {
     public update(): void {
         if (this.clientX && this.clientY) {
             // this.start = this.clickObjectHandler({ x: this.clientX, y: this.clientY });
-            console.log({ x: this.clientX, y: this.clientY });
+            console.log(this.clickObjectHandler({ x: this.clientX, y: this.clientY }));
         }
     }
 }

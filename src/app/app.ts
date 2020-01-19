@@ -13,6 +13,9 @@ const menuScene = new MenuScene({
     background: 'background.png',
     context: core.context,
 });
+const testScene = new TestScene({
+    context: core.context,
+});
 
 const mainScene = new MainScene({
     background: 'background.png',
@@ -21,4 +24,5 @@ const mainScene = new MainScene({
 
 core.appendScene({ name: 'main', scene: mainScene });
 core.appendScene({ name: 'menu', scene: menuScene });
-core.setActiveScene('menu');
+core.appendScene({ name: 'test', scene: testScene });
+core.setActiveScene('test');
