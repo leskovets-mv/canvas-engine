@@ -31,8 +31,12 @@ export function isCollision(object: SceneObjectInterface, current: SceneObjectIn
 
 export function isClick(mouse: PointInterface, target: SceneObjectInterface) {
     if (!mouse || !target) return;
+    console.log(this)
 
-    return mouse.x > target.position.x && mouse.y > target.position.y &&
-        mouse.x < target.position.x + target.size.width &&
-        mouse.y < target.position.y + target.size.height;
+    if (target.rotate) {
+    } else {
+        return mouse.x > target.position.x && mouse.y > target.position.y &&
+            mouse.x < target.position.x + target.size.width &&
+            mouse.y < target.position.y + target.size.height;
+    }
 }

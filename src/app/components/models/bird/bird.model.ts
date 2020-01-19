@@ -1,4 +1,4 @@
-import { SceneObject } from "../../../../core/components/scene-object/scene-object";
+import { SceneObject } from "../../../../../core/components/scene-object/scene-object";
 
 export class BirdModel extends SceneObject {
     private coldDown: number = 0;

@@ -2,6 +2,7 @@ import Core from "../../core/core";
 import { environments } from "../environments/environments";
 import { MenuScene } from "./components/scenes/menu.scene";
 import { MainScene } from "./components/scenes/main.scene";
+import { TestScene } from "./components/scenes/test.scene";
 
 const core = new Core({
     width: environments.WIDTH,

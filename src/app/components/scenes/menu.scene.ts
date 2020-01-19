@@ -1,7 +1,7 @@
 import { environments } from "../../../environments/environments";
 import { Scene } from "../../../../core/components/scene/scene";
-import { ButtonControl } from "../controls/button.control";
-import { ButtonModel } from "../models/button.model";
+import { ButtonControl } from "../models/button/button.control";
+import { ButtonModel } from "../models/button/button.model";
 
 export class MenuScene extends Scene {
     public start: boolean;

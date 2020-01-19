@@ -12,8 +12,9 @@ export class SceneObject implements SceneObjectInterface {
     public name: string;
     public control: any;
     public text: string;
-    public isCollision = isCollision;
-    public isClick = isClick;
+    public isCollision = isCollision.bind(this);
+    public isClick = isClick.bind(this);
+    public type: 'rect' | 'arc';
     private readonly keyDownHandler: (e: KeyboardEvent) => void;
     private readonly keyUpHandler: (e: KeyboardEvent) => void;
     private readonly clickHandler: (e: MouseEvent) => void;
@@ -26,12 +27,9 @@ export class SceneObject implements SceneObjectInterface {
         this.color = options.color || 'transparent';
         this.name = options.name || '';
         this.rotate = options.rotate || 0;
-        if (options.text) {
-            this.text = options.text;
-        }
-        if (options.texture) {
-            this.texture = options.texture;
-        }
+        this.type = options.type || 'rect';
+        this.text = options.text;
+        this.texture = options.texture;
         if (options.update) {
             this.update = options.update;
         }
@@ -44,7 +42,6 @@ export class SceneObject implements SceneObjectInterface {
             this.mouseDownHandler = options.control.mouseDownHandler.bind(this);
             this.setControl();
         }
-        this.isClick = isClick
     }
 
     public direction(velocity: PointInterface): void {
@@ -52,8 +49,8 @@ export class SceneObject implements SceneObjectInterface {
         this.position.y += velocity.y ? velocity.y : 0;
     }
 
-    public clickObjectHandler(target: PointInterface): boolean {
-        return this.isClick(target, this);
+    public clickObjectHandler(mousePosition: PointInterface): boolean {
+        return this.isClick(mousePosition, this);
     }
 
     public setControl(): void {

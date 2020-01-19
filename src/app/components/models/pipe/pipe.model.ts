@@ -1,4 +1,4 @@
-import {SceneObject} from "../../../../core/components/scene-object/scene-object";
+import {SceneObject} from "../../../../../core/components/scene-object/scene-object";
 
 export class PipeModel extends SceneObject {
     constructor(options: { [key: string]: any }) {

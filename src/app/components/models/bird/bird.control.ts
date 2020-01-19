@@ -1,4 +1,4 @@
-import {SceneObjectControl} from "../../../../core/util/controls/scene-object.control";
+import {SceneObjectControl} from "../../../../../core/util/controls/scene-object.control";
 
 export class BirdControl extends SceneObjectControl {
     public isJump = false;

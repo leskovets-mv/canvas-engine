@@ -1,9 +1,9 @@
 import { environments } from "../../../environments/environments";
 import { Scene } from "../../../../core/components/scene/scene";
-import { BirdControl } from "../controls/bird.control";
-import { GroundModel } from "../models/ground.model";
-import { PipeModel } from "../models/pipe.model";
-import { BirdModel } from "../models/bird.model";
+import { BirdControl } from "../models/bird/bird.control";
+import { GroundModel } from "../models/ground/ground.model";
+import { PipeModel } from "../models/pipe/pipe.model";
+import { BirdModel } from "../models/bird/bird.model";
 
 export class MainScene extends Scene {
     public background: string;
