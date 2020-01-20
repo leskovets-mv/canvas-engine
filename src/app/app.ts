@@ -25,4 +25,4 @@ const mainScene = new MainScene({
 core.appendScene({ name: 'main', scene: mainScene });
 core.appendScene({ name: 'menu', scene: menuScene });
 core.appendScene({ name: 'test', scene: testScene });
-core.setActiveScene('test');
+core.setActiveScene('menu');
