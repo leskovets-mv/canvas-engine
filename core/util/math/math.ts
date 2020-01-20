@@ -33,9 +33,9 @@ export function isClick(mouse: PointInterface, target: SceneObjectInterface) {
     if (!mouse || !target) return;
 
     // if (target.rotate) {
-    return insideRotate(mouse, target)
+    // return insideRotate(mouse, target)
     // } else {
-    // return inside(mouse, target)
+    return inside(mouse, target)
     // }
 }
 
