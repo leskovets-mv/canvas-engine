@@ -1,7 +1,5 @@
-import { SceneObject } from "../scene-object/scene-object";
-import { LayerInterface } from "./layer.interface";
-
-
+import {SceneObject} from "../scene-object/scene-object";
+import {LayerInterface} from "./layer.interface";
 
 export class Layer implements LayerInterface {
     public layerObjects: SceneObject[] = [];

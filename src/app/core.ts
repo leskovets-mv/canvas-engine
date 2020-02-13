@@ -1,43 +1,51 @@
-import { Scene } from "./components/scene/scene";
+import {Scene} from './components/scene/scene';
 
 declare const window;
 
-type options = {
-    width: number,
-    height: number,
-    background?: string
-};
+interface CoreOptions {
+    width: number;
+    height: number;
+    background?: string;
+    render?: boolean;
+}
 
 export default class Core {
-    private canvas: HTMLCanvasElement = window.document.createElement('canvas');
-    public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
+    public canvas: HTMLCanvasElement;
+    public context: CanvasRenderingContext2D;
     public scenes: { [key: string]: Scene } = {};
     private activeScene: Scene;
     private readonly width: number;
     private readonly height: number;
     private requestId: number;
 
-    constructor(options: options) {
+    constructor(options: CoreOptions) {
         this.width = options.width;
         this.height = options.height;
-        this.canvas.height = this.height;
-        this.canvas.width = this.width;
+        this.canvas = this.generateCanvas();
         this.context = this.canvas.getContext('2d');
-        window.document.body.appendChild(this.canvas);
+    }
+
+    private generateCanvas(): HTMLCanvasElement {
+        const canvas = window.document.createElement('canvas');
+        canvas.height = this.height;
+        canvas.width = this.width;
+        return canvas;
     }
 
     public setActiveScene(scene: string): void {
         window.cancelAnimationFrame(this.requestId);
-        if (!this.scenes[scene]) return;
+        if (!this.scenes[scene]) {
+            return;
+        }
         if (this.activeScene) {
-            this.activeScene.clearLayer('default')
+            this.activeScene.clearLayer('default');
         }
         this.activeScene = this.scenes[scene];
         this.activeScene.init();
         this.update();
     }
 
-    public appendScene({ name, scene }): void {
+    public appendScene({name, scene}): void {
         scene.setActiveScene = this.setActiveScene.bind(this);
         this.scenes[name] = scene;
     }

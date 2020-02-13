@@ -7,13 +7,13 @@ export class SceneObjectControl {
 
     public clickHandler(event: MouseEvent) {
 
-    };
+    }
 
     public keyDownHandler(event: KeyboardEvent) {
 
-    };
+    }
 
     public keyUpHandler(event: KeyboardEvent) {
 
-    };
+    }
 }
