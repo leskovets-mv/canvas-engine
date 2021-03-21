@@ -1,47 +1,68 @@
 const path = require('path');
-const HtmlWebpackPlugins = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: path.resolve(__dirname, 'src', 'app', 'app.ts'),
-    output: {
-        filename: 'bundle.[chunkhash].js',
-        path: path.resolve(__dirname, 'public')
-    },
+    mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: path.resolve(__dirname, 'src'),
-        port: 3000
+        host: 'localhost',
+        port: 8080
     },
-    plugins: [
-        new HtmlWebpackPlugins({
-            template: path.resolve(__dirname, 'src', 'index.html'),
-        }),
-        new CopyPlugin([
-            {
-                from: path.resolve(__dirname, 'src', 'app', 'assets'),
-                to: path.resolve(__dirname, 'public', 'assets'),
-            },
-        ]),
-        new CleanWebpackPlugin()
-    ],
+    entry: path.resolve(__dirname, 'src', 'example', 'app', 'app.ts'),
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                loader: "ts-loader"
+                test: /\.s[ac]ss$/i,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {},
+                    },
+                    {loader: "css-loader"},
+                    {loader: "sass-loader"}
+                ],
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
-                loader: 'image-loader',
+                test: /\.jpe?g$|\.gif$|\.png$|\.svg$/,
+                loader: "file-loader",
                 options: {
-                    name: path.resolve(__dirname, 'public', 'assets', '[name].[ext]')
+                    name: '[name].[ext]'
                 }
-            }
-        ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: ['.tsx', '.ts', '.js'],
     },
+    output: {
+        filename: 'js/[name].bundle.[fullhash].js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'styles/style.css',
+        }),
+        new CleanWebpackPlugin({cleanStaleWebpackAssets: false}),
+        new HtmlWebpackPlugin(),
+    ],
+    optimization: {
+        runtimeChunk: 'single',
+        minimizer: []
+    }
 };

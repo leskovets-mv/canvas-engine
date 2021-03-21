@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./public/",
+    "outDir": "./dist/",
     "noImplicitAny": false,
     "module": "es6",
     "target": "es5",
-    "sourceMap": true,
-    "jsx": "react",
     "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "component": [
+        "src/app/core/component"
+      ]
+    },
     "types": [
       "node"
-    ]
+    ],
+    "moduleResolution": "Node"
   }
 }
