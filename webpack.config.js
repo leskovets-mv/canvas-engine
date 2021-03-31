@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     mode: 'development',
@@ -10,7 +11,7 @@ module.exports = {
         host: 'localhost',
         port: 8080
     },
-    entry: path.resolve(__dirname, 'src', 'example', 'app', 'app.ts'),
+    entry: path.resolve(__dirname, 'src', 'app', 'main.ts'),
     module: {
         rules: [
             {
@@ -63,6 +64,7 @@ module.exports = {
     ],
     optimization: {
         runtimeChunk: 'single',
-        minimizer: []
+        minimize: true,
+        minimizer: [new TerserPlugin({})],
     }
 };
